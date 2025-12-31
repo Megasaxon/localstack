@@ -22,8 +22,8 @@ services:
 volumes:
   caddy_data:
     name: caddy_data
-    external: true
   caddy_config:
+    name: caddy_config
 networks:
   main_vlan:
     external: true
