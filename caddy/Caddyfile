@@ -1,20 +1,19 @@
-
-vars {
-  domain "lab.craigrose.au"
-  email "{env.EMAIL}"
-  cf_token "{env.CF_API_TOKEN}"
-}
-
 {
-    email {vars.email}
-    acme_dns cloudflare {vars.cf_token}
+  vars {
+    domain "lab.craigrose.au"
+    email "{env.EMAIL}"
+    cf_token "{env.CF_API_TOKEN}"
+  }
+
+  email {vars.email}
+  acme_dns cloudflare {vars.cf_token}
 }
 
 *.{vars.domain} {
 
   tls {
-      dns cloudflare {vars.cf_token}
-      resolvers 1.1.1.1
+    dns cloudflare {vars.cf_token}
+    resolvers 1.1.1.1
   }
 
   @jellyfin host jellyfin.{vars.domain}
