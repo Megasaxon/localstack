@@ -1,5 +1,5 @@
 {
-    email {$EMAIL}
+    email {env.EMAIL}
     acme_dns cloudflare {$CF_API_TOKEN}
 }
 
