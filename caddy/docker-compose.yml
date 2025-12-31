@@ -1,8 +1,6 @@
 services:
   caddy:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ghcr.io/caddybuilds/caddy-cloudflare:2.10.2-alpine
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
@@ -11,6 +9,7 @@ services:
       - "443:443"
       - "443:443/udp"
     volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
       - caddy_data:/data
       - caddy_config:/config
     networks:
