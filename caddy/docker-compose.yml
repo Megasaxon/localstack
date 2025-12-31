@@ -1,0 +1,32 @@
+services:
+  caddy:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: 
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - caddy_data:/data
+      - caddy_config:/config
+    networks:
+      main_vlan:
+        ipv4_address: 10.10.10.161
+      komodo_default:
+    dns:
+      - 1.1.1.1
+volumes:
+  caddy_data:
+    name: caddy_data
+    external: true
+  caddy_config:
+networks:
+  main_vlan:
+    external: true
+  komodo_default:
+    external: true

@@ -1,0 +1,58 @@
+name: minecraft
+services:
+  minecraft-survival:
+    image: itzg/minecraft-bedrock-server
+    restart: unless-stopped
+    ports:
+      - "19132:19132/udp"
+    volumes:
+      - ./data-survival:/data-survival
+    environment:
+      EULA: "TRUE"
+      TZ: "Australia/Brisbane"
+      SERVER_NAME: "RoseCRAFT Survival"
+      GAMEMODE: "survival"
+      MOTD: "\u00A74Rose\u00A72\u00A7lCRAFT\u00A7r Minecraft Server\u00A7r\n\u00A76Survival Server"
+      ALLOW_CHEATS: true
+      DEFAULT_PLAYER_PERMISSION_LEVEL: "operator"
+      OPS: "2535426893255087,2535435956507253"
+      LEVEL_SEED: "-5207005594169711425"
+    stdin_open: true
+    tty: true
+    networks:
+      main_vlan:
+        ipv4_address: 10.10.10.165
+        
+  minecraft-creative:
+    image: itzg/minecraft-bedrock-server
+    restart: unless-stopped
+    ports:
+      - "19132:19132/udp"
+    volumes:
+      - ./data-creative:/data-creative
+    environment:
+      EULA: "TRUE"
+      TZ: "Australia/Brisbane"
+      SERVER_NAME: "RoseCRAFT Creative"
+      GAMEMODE: "creative"
+      MOTD: "\u00A74Rose\u00A72\u00A7lCRAFT\u00A7r Minecraft Server\u00A7r\n\u00A79Creative Server"
+      ALLOW_CHEATS: true
+      DEFAULT_PLAYER_PERMISSION_LEVEL: "operator"
+      OPS: "2535426893255087,2535435956507253"
+    stdin_open: true
+    tty: true
+    networks:
+      main_vlan:
+        ipv4_address: 10.10.10.166
+
+volumes:
+    data-survival:
+      external:
+        name: minecraft_survival_seed
+    data-creative:
+      external:
+        name: minecraft_creative
+
+networks:
+  main_vlan:
+    external: true

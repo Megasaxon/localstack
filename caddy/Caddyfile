@@ -1,0 +1,36 @@
+{
+    email {env.EMAIL}
+    acme_dns cloudflare {env.CF_API_TOKEN}
+}
+
+*.{env.DOMAIN} {
+
+  tls {
+      dns cloudflare {env.CF_API_TOKEN}
+      resolvers 1.1.1.1
+  }
+
+  @jellyfin host jellyfin.{env.DOMAIN}
+  handle @jellyfin {
+    reverse_proxy 10.10.10.162:8096
+  }
+
+  @komodo host komodo.{env.DOMAIN}
+  handle @komodo {
+    reverse_proxy komodo-core-1:9120
+  }
+
+  @immich host immich.{env.DOMAIN}
+  handle @immich {
+    reverse_proxy 10.10.10.163
+  }
+
+  handle {
+    abort
+  }
+
+  log {
+    output stdout
+    format console
+  }
+}

@@ -1,0 +1,42 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    networks:
+      main_vlan:
+        ipv4_address: 10.10.10.162
+    ports:
+      - 8096:8096/tcp # bind to 80
+      - 7359:7359/udp
+    volumes:
+      - ./jellyfin_config:/config
+      - ./jellyfin_cache:/cache
+      - jellyfin_media_nas_kids:/media_kids
+      - jellyfin_media_nas_movies:/media_movies
+    restart: 'unless-stopped'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+networks:
+  main_vlan:
+    name: main_vlan
+    external: true
+
+volumes:
+  jellyfin_media_nas_kids:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=10.10.10.8,nfsvers=4,rw,nolock,soft" # Adjust NFS options as needed
+      device: ":/volume1/video/Kids Movies" # Replace with your NFS server path
+  jellyfin_media_nas_movies:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=10.10.10.8,nfsvers=4,rw,nolock,soft" # Adjust NFS options as needed
+      device: ":/volume1/video/Movies" # Replace with your NFS server path
+  jellyfin_config:
+    name: jellyfin_config
+    external: true
+  jellyfin_cache:
+    name: jellyfin_cache
+    external: true
