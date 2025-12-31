@@ -1,26 +1,33 @@
-{
-    email {env.EMAIL}
-    acme_dns cloudflare {env.CF_API_TOKEN}
+
+vars {
+  domain "lab.craigrose.au"
+  email "{env.EMAIL}"
+  cf_token "{env.CF_API_TOKEN}"
 }
 
-*.{env.DOMAIN} {
+{
+    email {vars.email}
+    acme_dns cloudflare {vars.cf_token}
+}
+
+*.{vars.domain} {
 
   tls {
-      dns cloudflare {env.CF_API_TOKEN}
+      dns cloudflare {vars.cf_token}
       resolvers 1.1.1.1
   }
 
-  @jellyfin host jellyfin.{env.DOMAIN}
+  @jellyfin host jellyfin.{vars.domain}
   handle @jellyfin {
     reverse_proxy 10.10.10.162:8096
   }
 
-  @komodo host komodo.{env.DOMAIN}
+  @komodo host komodo.{vars.domain}
   handle @komodo {
     reverse_proxy komodo-core-1:9120
   }
 
-  @immich host immich.{env.DOMAIN}
+  @immich host immich.{vars.domain}
   handle @immich {
     reverse_proxy 10.10.10.163
   }
