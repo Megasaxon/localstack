@@ -1,12 +1,12 @@
 {
-    email {env.EMAIL}
-    acme_dns cloudflare {env.CF_API_TOKEN}
+    email "{env.EMAIL}"
+    acme_dns cloudflare "{env.CF_API_TOKEN}"
 }
 
 *.{env.DOMAIN} {
 
   tls {
-      dns cloudflare {env.CF_API_TOKEN}
+      dns cloudflare "{env.CF_API_TOKEN}"
       resolvers 1.1.1.1
   }
 
