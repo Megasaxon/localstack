@@ -23,12 +23,12 @@
 
   @storage host storage.{$DOMAIN}
   handle @storage {
-    reverse_proxy 10.10.10.8:80
+    reverse_proxy 0.10.10.8:5000
   }
 
   @router host router.{$DOMAIN}
   handle @router {
-    reverse_proxy 10.10.10.1:443
+    reverse_proxy 10.10.10.1
   }
 
   handle {
