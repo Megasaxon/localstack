@@ -1,10 +1,7 @@
 {
     email {$EMAIL}
     acme_dns cloudflare "{$CF_API_TOKEN}"
-    challenges {
-      dns cloudflare "{$CF_API_TOKEN}""
-      resolvers 1.1.1.1:53 
-    }
+    debug
 }
 
 *.{$DOMAIN} {
@@ -31,12 +28,12 @@
 
   @storage host storage.{$DOMAIN}
   handle @storage {
-    reverse_proxy 10.10.10.8
+    reverse_proxy 10.10.10.8:80
   }
 
   @router host router.{$DOMAIN}
   handle @router {
-    reverse_proxy 10.10.10.1
+    reverse_proxy 10.10.10.1:443
   }
 
   handle {
