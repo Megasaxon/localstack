@@ -25,6 +25,16 @@
     reverse_proxy 10.10.10.163
   }
 
+  @storage host storage.{$DOMAIN}
+  handle @storage {
+    reverse_proxy 10.10.10.8
+  }
+
+  @router host router.{$DOMAIN}
+  handle @router {
+    reverse_proxy 10.10.10.1
+  }
+
   handle {
     abort
   }
