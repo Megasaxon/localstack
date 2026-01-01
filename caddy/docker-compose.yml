@@ -1,6 +1,6 @@
 services:
   caddy:
-    image: ghcr.io/caddybuilds/caddy-cloudflare:2.10.2-alpine
+    image: ghcr.io/caddybuilds/caddy-cloudflare:2.10.2
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
@@ -16,8 +16,6 @@ services:
       main_vlan:
         ipv4_address: 10.10.10.161
       komodo_default:
-    dns:
-      - 1.1.1.1
     environment:
       - CF_API_TOKEN=$CF_API_TOKEN
       - DOMAIN=$DOMAIN
