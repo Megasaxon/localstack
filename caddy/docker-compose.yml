@@ -19,9 +19,9 @@ services:
     dns:
       - 1.1.1.1
     environment:
-      - CF_API_TOKEN={$CF_API_TOKEN}
-      - DOMAIN={$DOMAIN}
-      - EMAIL={$EMAIL}
+      - CF_API_TOKEN=$CF_API_TOKEN
+      - DOMAIN=$DOMAIN
+      - EMAIL=$EMAIL
 volumes:
   caddy_data:
     name: caddy_data
