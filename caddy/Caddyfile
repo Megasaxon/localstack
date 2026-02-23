@@ -3,6 +3,13 @@
     acme_dns cloudflare "{$CF_API_TOKEN}"
 }
 
+(allow_insecure_ssl) {
+    transport http {
+        tls
+        tls_insecure_skip_verify
+    }
+}
+
 *.{$DOMAIN} {
 
   @jellyfin host jellyfin.{$DOMAIN}
@@ -30,6 +37,12 @@
     reverse_proxy 10.10.10.1:443
   }
 
+  @obsidian host notes.{$DOMAIN}
+  handle @obsidian {
+        reverse_proxy 10.10.10.162:3001 {
+        import allow_insecure_ssl
+    }
+  }
   handle {
     abort
   }

@@ -1,0 +1,30 @@
+services:
+  obsidian:
+    image: ghcr.io/linuxserver/obsidian:latest
+    container_name: Obsidian
+    security_opt:
+      - no-new-privileges:false
+      - seccomp:unconfined
+    ports:
+      - 3421:3000
+      - 3427:3001
+    volumes:
+      - obsidian_storage/config:/config:rw
+      - obsidian_storage/config/vaults:/config/vaults:rw
+    environment:
+      CUSTOM_USER: admin
+      PASSWORD: $ADMIN_PASSWORD
+#      PUID: 1000 # Your user id (check with 'id -u')
+#      PGID: 1000 # Your group id (check with 'id -g')
+      TZ: Australia/Brisbane 
+    restart: unless-stopped
+    networks:
+      main_vlan:
+        ipv4_address: 10.10.10.163
+volumes:    
+  obsidian_storage:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: "addr=10.10.10.8,nfsvers=4,rw,nolock,soft"
+      device: ":/volume2/Obsidian"
